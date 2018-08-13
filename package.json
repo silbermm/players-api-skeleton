@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "test_user": "mocha test/api/user.spec.js",
     "test": "mocha test/**/*.spec.js"
   },
   "author": "Steven White <steven@galchemy.codes>",
@@ -20,5 +21,8 @@
     "mocha": "^3.4.2",
     "sinon": "^2.3.4",
     "sinon-chai": "^2.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3"
   }
 }
