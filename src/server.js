@@ -1,10 +1,9 @@
-var express = require("express");
-var app = express();
-
+const express = require("express");
 const models = require("./models");
 const auth = require("./utils/authorization");
-
 const bodyParser = require("body-parser");
+
+let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
