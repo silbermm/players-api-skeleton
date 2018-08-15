@@ -7,23 +7,23 @@ module.exports = {
       if (!first_name || !last_name || !rating || !handedness) {
         throw Error(409);
       }
-      const inserted = database.insertPlayer(player);
+      const inserted = database.player.insert(player);
       if (!inserted) {
         throw Error(409);
       }
       return inserted;
     },
     findById: async playerId => {
-      return database.findPlayerById(playerId);
+      return database.player.findById(playerId);
     },
     getAll: async userId => {
-      return database.getPlayers(userId);
+      return database.player.findByCreator(userId);
     },
     remove: async () => {
-      database.removePlayers();
+      database.player.remove();
     },
     removePlayer: async (playerId, userId) => {
-      if (!database.removePlayer(playerId, userId)) {
+      if (!database.player.remove(playerId, userId)) {
         throw Error(404);
       }
     }
@@ -45,25 +45,25 @@ module.exports = {
         throw Error(409);
       }
       const userToInsert = { email, first_name, last_name, password };
-      const inserted = database.insertUser(userToInsert);
+      const inserted = database.user.insert(userToInsert);
       if (!inserted) {
         throw Error(409);
       }
       return inserted;
     },
     login: async ({ email, password }) => {
-      const user = database.findUser(email, password);
+      const user = database.user.find(email, password);
       if (!user) {
         throw Error(401);
       }
       return user;
     },
     remove: async () => {
-      database.removeUsers();
+      database.user.remove();
       return true;
     },
     update: async (id, user) => {
-      let newUser = database.updateUser(id, user);
+      let newUser = database.user.update(id, user);
       if (!newUser) {
         throw Error(409);
       }

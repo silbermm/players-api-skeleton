@@ -6,7 +6,7 @@ const authorization = {
       const bearer = req.get("Authorization");
       [prefix, token] = bearer.split(" ");
       if (prefix !== "Bearer") throw new Error(403);
-      const user = database.findUserByToken(token);
+      const user = database.user.findByToken(token);
       afterAuthFn(token, user.user.id);
     } catch (err) {
       res.status(403);
