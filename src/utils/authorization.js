@@ -15,6 +15,4 @@ const authorization = {
   }
 };
 
-
-
 module.exports = authorization;

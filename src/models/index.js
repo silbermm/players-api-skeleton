@@ -7,7 +7,7 @@ module.exports = {
     },
     removePlayer: async (playerId, userId) => {
       if (!database.removePlayer(playerId, userId)) {
-        throw Error(404)
+        throw Error(404);
       }
     },
     create: async ({
@@ -32,10 +32,10 @@ module.exports = {
       }
       throw Error(409);
     },
-    getAll: async (userId) => {
-      return database.getPlayers(userId)
+    getAll: async userId => {
+      return database.getPlayers(userId);
     },
-    findById: async (playerId) => {
+    findById: async playerId => {
       return database.findPlayerById(playerId);
     }
   },
@@ -66,7 +66,7 @@ module.exports = {
       ) {
         throw Error(409);
       }
-      const userToInsert = {email, first_name, last_name, password}
+      const userToInsert = { email, first_name, last_name, password };
       const inserted = database.insertUser(userToInsert);
       if (!inserted) {
         throw Error(409);

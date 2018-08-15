@@ -63,21 +63,23 @@ app.post("/api/players", function(req, res) {
 
 app.get("/api/players", function(req, res) {
   auth.handleAuth(req, res, (token, userId) => {
-    models.Player.getAll(userId).then( (players) => {
-      res.send({players, success: true})
+    models.Player.getAll(userId).then(players => {
+      res.send({ players, success: true });
     });
   });
 });
 
 app.delete("/api/players/:playerId", function(req, res) {
-  const playerId = req.params.playerId
+  const playerId = req.params.playerId;
   auth.handleAuth(req, res, (token, userId) => {
-    models.Player.removePlayer(playerId, userId).then( () => {
-      res.send()
-    }).catch( (err) => {
-      res.status(err.message);
-      res.send();
-    });
+    models.Player.removePlayer(playerId, userId)
+      .then(() => {
+        res.send();
+      })
+      .catch(err => {
+        res.status(err.message);
+        res.send();
+      });
   });
 });
 
