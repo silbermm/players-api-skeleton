@@ -2,6 +2,23 @@ const database = require("../database");
 
 module.exports = {
   Player: {
+    create: async player => {
+      let { first_name, last_name, rating, handedness, created_by } = player;
+      if (!first_name || !last_name || !rating || !handedness) {
+        throw Error(409);
+      }
+      const inserted = database.insertPlayer(player);
+      if (!inserted) {
+        throw Error(409);
+      }
+      return inserted;
+    },
+    findById: async playerId => {
+      return database.findPlayerById(playerId);
+    },
+    getAll: async userId => {
+      return database.getPlayers(userId);
+    },
     remove: async () => {
       database.removePlayers();
     },
@@ -9,48 +26,9 @@ module.exports = {
       if (!database.removePlayer(playerId, userId)) {
         throw Error(404);
       }
-    },
-    create: async ({
-      first_name,
-      last_name,
-      rating,
-      handedness,
-      created_by
-    }) => {
-      if (!first_name || !last_name || !rating || !handedness) {
-        throw Error(409);
-      }
-      const newPlayer = database.insertPlayer({
-        first_name,
-        last_name,
-        rating,
-        handedness,
-        created_by
-      });
-      if (newPlayer) {
-        return newPlayer;
-      }
-      throw Error(409);
-    },
-    getAll: async userId => {
-      return database.getPlayers(userId);
-    },
-    findById: async playerId => {
-      return database.findPlayerById(playerId);
     }
   },
   User: {
-    remove: async () => {
-      database.removeUsers();
-      return true;
-    },
-    login: async ({ email, password }) => {
-      const user = database.findUser(email, password);
-      if (!user) {
-        throw Error(401);
-      }
-      return user;
-    },
     create: async ({
       email,
       first_name,
@@ -72,6 +50,17 @@ module.exports = {
         throw Error(409);
       }
       return inserted;
+    },
+    login: async ({ email, password }) => {
+      const user = database.findUser(email, password);
+      if (!user) {
+        throw Error(401);
+      }
+      return user;
+    },
+    remove: async () => {
+      database.removeUsers();
+      return true;
     },
     update: async (id, user) => {
       let newUser = database.updateUser(id, user);
