@@ -30,7 +30,7 @@ module.exports = {
     },
     update: (id, newUser) => {
       const user = users.find(u => u.user.id === id);
-      const updated = { ...newUser, id: user.user.id }
+      const updated = { ...newUser, id: user.user.id };
       if (user) {
         users = users.map(u => {
           if (u.user.id === id) {
@@ -49,9 +49,15 @@ module.exports = {
     findById: playerId => {
       return players.find(player => player.id === playerId);
     },
-    insert: (player) => {
+    insert: player => {
       let { first_name, last_name, rating, handedness, created_by } = player;
-      if (players.find( player => player.first_name === first_name && player.last_name === last_name)) return null;
+      if (
+        players.find(
+          player =>
+            player.first_name === first_name && player.last_name === last_name
+        )
+      )
+        return null;
       const newPlayer = { ...player, id: (players.length + 1).toString() };
       players = [...players, newPlayer];
       return newPlayer;
